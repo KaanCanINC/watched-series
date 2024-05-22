@@ -35,11 +35,7 @@ const RegistrationModal = ({ isOpen, onClose }) => {
               </div>
               <div className="flex items-center justify-between pb-4">
                 <label>
-                  <input
-                    type="checkbox"
-                    id="dontForget"
-                    className="active:bg-violet-400"
-                  />
+                  <input type="checkbox" className="active:bg-violet-400" />
                   Beni Hatırla
                 </label>
                 <a href="#" className="text-sm text-blue-500">
