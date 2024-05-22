@@ -1,0 +1,12 @@
+{
+  "semi": true,
+  "overrides": [
+    {
+      "files": [".jsx", ".js"],
+      "options": {
+        "semi": true
+      }
+    }
+  ],
+  "plugins": ["prettier-plugin-tailwindcss"]
+}

@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.login-modal-bg {
+  background-image: url("https://wallpapers.com/images/high/cute-aesthetic-anime-lzk6u7yyfgo02pi5.webp");
+  background-repeat: no-repeat;
+  background-position: bottom;
+}
