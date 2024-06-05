@@ -1,25 +1,42 @@
 import Button from "~/components/Button";
+import { CgSpinnerAlt } from "react-icons/cg";
 import Input from "~/components/Input";
 
-const LoginSection = ({ setIsRegistered }) => (
+const LoginSection = ({
+   setIsRegistered,
+   onClick,
+   onChange,
+   user,
+   error,
+   loading
+}) => (
    <div className="grid grid-cols-1 lg:grid-cols-2">
       <div className="login-modal-bg p-8 py-36 sm:bg-none lg:py-[11.5rem]">
          <div className="text-center">
             <h2 className="pb-3 text-2xl font-semibold">Giris yap</h2>
          </div>
-         <form action="">
+         {error && <div className="text-red-500">{error}</div>}
+         <form>
             <div className="flex flex-col gap-4 pb-4">
                <Input
                   variant="register"
                   placeholder="E-Posta"
                   size="small"
                   type="email"
+                  id="email"
+                  value={user.email}
+                  onChange={onChange}
+                  required
                />
                <Input
                   variant="register"
                   placeholder="Şifre"
                   size="small"
                   type="password"
+                  id="password"
+                  value={user.password}
+                  onChange={onChange}
+                  required
                />
             </div>
             <div className="flex items-center justify-between pb-4">
@@ -35,12 +52,13 @@ const LoginSection = ({ setIsRegistered }) => (
                </a>
             </div>
             <div className="flex justify-center gap-2.5">
-               <Button variant="default" size="medium" className="w-2/4 py-2">
-                  Giriş Yap
+               <Button variant="default" size="medium" className="w-2/4 py-2" onClick={onClick}>
+                  {loading ? <CgSpinnerAlt className="animate-spin" /> : "Giriş Yap"}
                </Button>
                <Button
                   variant="default"
                   size="medium"
+                  type="button"
                   className="w-2/4 py-2 lg:hidden"
                   onClick={() => setIsRegistered(false)}
                >

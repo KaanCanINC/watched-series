@@ -1,11 +1,18 @@
 import { useState } from "react";
 import RegisterSection from "./RegisterSection";
 import LoginSection from "./LoginSection";
-import handleRegister from "~/services/authService";
+import { handleRegister, handleLogin } from "~/services/authService";
+import { useEffect } from "react";
 
 const RegistrationModal = ({ isOpen, onClose }) => {
    const [isRegistered, setIsRegistered] = useState(true);
+   const [loading, setLoading] = useState(false);
+   const [deneme, setDeneme] = useState(false)
    const [errorMessage, setErrorMessage] = useState("")
+   const [userLogin, setUserLogin] = useState({
+      email: "",
+      password: "",
+   })
    const [user, setUser] = useState({
       firstname: "",
       lastname: "",
@@ -16,13 +23,15 @@ const RegistrationModal = ({ isOpen, onClose }) => {
       notify: false,
    });
 
-   const handleInputChange = (e) => {
+   const handleInputChange = (e, setter) => {
       const { id, value } = e.target;
-      setUser((prevUser) => ({
+      setter((prevUser) => ({
          ...prevUser,
          [id]: value,
       }));
    };
+
+
 
    if (!isOpen) return null;
    return (
@@ -37,7 +46,7 @@ const RegistrationModal = ({ isOpen, onClose }) => {
             {!isRegistered ? (
                <RegisterSection
                   setIsRegistered={setIsRegistered}
-                  onChange={handleInputChange}
+                  onChange={(e) => handleInputChange(e, setUser)}
                   user={user}
                   notify={(e) =>
                      setUser((prevUser) => ({ ...prevUser, notify: e.target.checked }))
@@ -46,7 +55,14 @@ const RegistrationModal = ({ isOpen, onClose }) => {
                   error={errorMessage}
                />
             ) : (
-               <LoginSection setIsRegistered={setIsRegistered} />
+               <LoginSection
+                  setIsRegistered={setIsRegistered}
+                  onChange={(e) => handleInputChange(e, setUserLogin)}
+                  user={userLogin}
+                  onClick={(event) => handleLogin(event, userLogin, onClose, setErrorMessage, setDeneme)}
+                  error={errorMessage}
+                  loading={loading}
+               />
             )}
          </div>
       </div>

@@ -32,6 +32,23 @@ const handleRegister = async (event, user, setIsRegistered, onClose, setErrorMes
          setErrorMessage("Beklenmeyen bir hata oluştu.");
       }
    }
+}
+   ;
+const handleLogin = async (event, user, onClose, setErrorMessage, setLoading) => {
+   event.preventDefault();
+   try {
+      const response = await axios.post("http://localhost:3001/api/users/login", user);
+      setLoading(true)
+      console.log(response.status, response);
+      localStorage.setItem("jwt_token", response.data.token)
+      onClose();
+   } catch (error) {
+      if (error.response && error.response.data) {
+         setErrorMessage(error.response.data.message || "Bilinmeyen bir hata oluştu. Epostanızı ve şifrenizi kontrol edip tekrar deneyin.");
+      } else {
+         setErrorMessage("Beklenmeyen bir hata oluştu.");
+      }
+   }
 };
 
-export default handleRegister
+export { handleRegister, handleLogin }

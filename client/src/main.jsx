@@ -7,22 +7,22 @@ import NotFound from "~/pages/ErrorPage";
 import Root from "~/routes";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Root />,
-    children: [
-      {
-        path: "/",
-        element: <Homepage />,
-      },
-      {
-        path: "*",
-        element: <NotFound />,
-      },
-    ],
-  },
+   {
+      path: "/",
+      element: <Root />,
+      children: [
+         {
+            path: "/",
+            element: <Homepage />,
+         },
+         {
+            path: "*",
+            element: <NotFound />,
+         },
+      ],
+   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <RouterProvider router={router} />,
+   <RouterProvider router={router} />
 );

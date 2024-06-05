@@ -13,9 +13,6 @@ const RegisterSection = ({
 }) => {
    const [passwordAgain, setPasswordAgain] = useState("");
    const [checkPassword, setCheckPassword] = useState(false);
-   const [emptyError, setEmptyError] = useState("")
-
-
 
    return (
       <div className="grid grid-cols-1 lg:grid-cols-2">

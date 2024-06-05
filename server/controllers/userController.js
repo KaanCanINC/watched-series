@@ -1,6 +1,8 @@
 const bcrypt = require("bcrypt");
-const User = require("../models");
 const jwt = require("jsonwebtoken");
+const db = require("../models");
+
+const User = db.users;
 
 const signUp = async (req, res) => {
   try {
@@ -35,7 +37,7 @@ const signUp = async (req, res) => {
       console.log("user", JSON.stringify(user, null, 2));
       console.log(token);
 
-      return res.status(201).send(user);
+      return res.status(200).send(user);
     } else {
       return res.status(409).send("Bilgiler doğru değil");
     }
@@ -55,28 +57,26 @@ const login = async (req, res) => {
       },
     });
 
-    if (user) {
-      const isSame = await bcrypt.compare(password, user.password);
+    if (!user) return res.status(409).json({ message: "Bilgiler doğru değil" });
 
-      if (isSame) {
-        let token = jwt.sign({ id: user.id }, process.env.secretKey, {
-          expiresIn: 1 * 24 * 60 * 60 * 1000,
-        });
+    const isSame = await bcrypt.compare(password, user.password);
 
-        res.cookie("jwt", token, {
-          maxAge: 1 * 24 * 60 * 60 * 1000,
-          httpOnly: true,
-        });
-        console.log("user", JSON.stringify(user, null, 2));
-        console.log(token);
-
-        return res.status(201).send(user);
-      } else {
-        return res.status(409).send("Bilgiler doğru değil");
-      }
-    } else {
-      return res.status(409).send("Bilgiler doğru değil");
+    if (!isSame) {
+      return res.status(409).json({ message: "Bilgiler doğru değil" });
     }
+    let token = jwt.sign({ id: user.id }, process.env.secretKey, {
+      expiresIn: 1 * 24 * 60 * 60 * 1000,
+    });
+
+    res.cookie("jwt", token, {
+      maxAge: 1 * 24 * 60 * 60,
+      httpOnly: true,
+    });
+
+    console.log("user", JSON.stringify(user, null, 2));
+    console.log(token);
+
+    return res.status(200).send({ token, user });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Sunucu hatası" });

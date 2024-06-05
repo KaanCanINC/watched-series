@@ -1,5 +1,8 @@
 const express = require("express");
-const User = require("../models");
+const db = require("../models");
+const jwt = require("jsonwebtoken");
+
+const User = db.users;
 
 const createUser = async (req, res, next) => {
   try {
@@ -33,4 +36,19 @@ const createUser = async (req, res, next) => {
   }
 };
 
-module.exports = { createUser };
+const verifyToken = (req, res, next) => {
+  const token = req.headers["x-access-token"];
+
+  if (!token)
+    return res.status(401).json({ message: "No token, authorization denied" });
+
+  try {
+    const decoded = jwt.verify(token, process.env.secretKey);
+    req.user = decoded;
+    next();
+  } catch (error) {
+    res.status(401).json({ message: "Token is not valid" });
+  }
+};
+
+module.exports = { createUser, verifyToken };
