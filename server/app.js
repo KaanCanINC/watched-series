@@ -28,8 +28,8 @@ db.sequelize.sync().then(() => {
 });
 
 app.use("/api/users", userRoutes);
-app.get("/api/test", verifyToken, (request, response) => {
-  response.status(200).json({ message: "test end point calisti" });
+app.get("/api/test", verifyToken, (req, res) => {
+  res.status(200).json({ message: "test end point calisti" });
 });
 
 app.listen(port, () => {
