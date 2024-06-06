@@ -5,6 +5,7 @@ require("dotenv").config();
 const db = require("./models");
 const userRoutes = require("./routes/userRoutes");
 const cors = require("cors");
+const { verifyToken } = require("./middleware/userAuth");
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -27,6 +28,9 @@ db.sequelize.sync().then(() => {
 });
 
 app.use("/api/users", userRoutes);
+app.get("/api/test", verifyToken, (request, response) => {
+  response.status(200).json({ message: "test end point calisti" });
+});
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

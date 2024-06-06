@@ -33,11 +33,14 @@ const signUp = async (req, res) => {
         expiresIn: 1 * 24 * 60 * 60 * 1000,
       });
 
-      res.cookie("jwt", token, { maxAge: 1 * 24 * 60 * 60, httpOnly: true });
+      res.cookie("x-access-token", token, {
+        maxAge: 1 * 24 * 60 * 60,
+        httpOnly: true,
+      });
       console.log("user", JSON.stringify(user, null, 2));
       console.log(token);
 
-      return res.status(200).send(user);
+      return res.status(200).send({ token, user });
     } else {
       return res.status(409).send("Bilgiler doğru değil");
     }
@@ -65,10 +68,10 @@ const login = async (req, res) => {
       return res.status(409).json({ message: "Bilgiler doğru değil" });
     }
     let token = jwt.sign({ id: user.id }, process.env.secretKey, {
-      expiresIn: 1 * 24 * 60 * 60 * 1000,
+      expiresIn: 1 * 60 * 60,
     });
 
-    res.cookie("jwt", token, {
+    res.cookie("x-access-token", token, {
       maxAge: 1 * 24 * 60 * 60,
       httpOnly: true,
     });

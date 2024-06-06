@@ -1,4 +1,7 @@
 import axios from "axios";
+import Cookies from "universal-cookie"
+
+const cookies = new Cookies()
 
 const handleRegister = async (event, user, setIsRegistered, onClose, setErrorMessage) => {
    event.preventDefault();
@@ -36,18 +39,21 @@ const handleRegister = async (event, user, setIsRegistered, onClose, setErrorMes
    ;
 const handleLogin = async (event, user, onClose, setErrorMessage, setLoading) => {
    event.preventDefault();
+   setLoading(true)
    try {
       const response = await axios.post("http://localhost:3001/api/users/login", user);
-      setLoading(true)
       console.log(response.status, response);
-      localStorage.setItem("jwt_token", response.data.token)
+      cookies.set("JWT_TOKEN", response.data.token, { path: "/" })
       onClose();
+      window.location.href = "/profile"
    } catch (error) {
       if (error.response && error.response.data) {
          setErrorMessage(error.response.data.message || "Bilinmeyen bir hata oluştu. Epostanızı ve şifrenizi kontrol edip tekrar deneyin.");
       } else {
          setErrorMessage("Beklenmeyen bir hata oluştu.");
       }
+   } finally {
+      setLoading(false)
    }
 };
 

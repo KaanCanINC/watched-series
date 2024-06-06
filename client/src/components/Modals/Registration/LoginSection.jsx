@@ -52,8 +52,14 @@ const LoginSection = ({
                </a>
             </div>
             <div className="flex justify-center gap-2.5">
-               <Button variant="default" size="medium" className="w-2/4 py-2" onClick={onClick}>
-                  {loading ? <CgSpinnerAlt className="animate-spin" /> : "Giriş Yap"}
+               <Button variant="default" size="medium" className="w-2/4 py-2 flex justify-center items-center" onClick={onClick} disable={loading}>
+                  {loading ?
+                     <>
+                        <CgSpinnerAlt className="animate-spin h-5 w-5" />
+                        <p className="px-2">Lütfen bekleyin</p>
+                     </>
+                     : "Giriş Yap"
+                  }
                </Button>
                <Button
                   variant="default"

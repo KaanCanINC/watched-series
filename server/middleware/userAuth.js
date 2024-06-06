@@ -36,15 +36,17 @@ const createUser = async (req, res, next) => {
   }
 };
 
-const verifyToken = (req, res, next) => {
-  const token = req.headers["x-access-token"];
+const verifyToken = async (req, res, next) => {
+  const token = await req.headers["x-access-token"];
 
   if (!token)
     return res.status(401).json({ message: "No token, authorization denied" });
 
   try {
     const decoded = jwt.verify(token, process.env.secretKey);
+
     req.user = decoded;
+
     next();
   } catch (error) {
     res.status(401).json({ message: "Token is not valid" });
