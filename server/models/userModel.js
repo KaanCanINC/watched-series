@@ -40,6 +40,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         defaultValue: false,
       },
+      avatar: {
+        type: DataTypes.BLOB,
+        allowNull: true,
+      },
     },
     { timestamps: true }, // Disable automatic timestamps if not needed
   );

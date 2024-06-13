@@ -1,22 +1,12 @@
 import React from "react";
-import { useState } from "react";
-import { Navigate } from "react-router-dom"
-import axios from "axios";
-import Cookies from "universal-cookie"
-import { useEffect } from "react";
-import RegistrationModal from "~/components/Modals/Registration/RegistrationModal";
+import { Navigate } from "react-router-dom";
 import { AuthContext } from "~/context/AuthContext";
 import { useContext } from "react";
 
-const cookies = new Cookies()
-
-
 const ProtectedRoutes = ({ element: Component }) => {
-   const { user } = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
 
-   return user
-      ? (Component)
-      : (<Navigate to="/" />)
-}
+  return user ? Component : <Navigate to="/" />;
+};
 
-export default ProtectedRoutes
+export default ProtectedRoutes;

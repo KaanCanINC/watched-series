@@ -1,11 +1,10 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
-const { Sequelize } = require("sequelize");
 require("dotenv").config();
 const db = require("./models");
 const userRoutes = require("./routes/userRoutes");
+const multerRoutes = require("./routes/multerRoutes");
 const cors = require("cors");
-const { verifyToken } = require("./middleware/userAuth");
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -23,14 +22,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 
-db.sequelize.sync().then(() => {
+db.sequelize.sync({ force: false }).then(() => {
   console.log("veritabanı yeniden eşitlendi");
 });
 
 app.use("/api/users", userRoutes);
-app.get("/api/test", verifyToken, (req, res) => {
-  res.status(200).json({ message: "test end point calisti" });
-});
+app.use("/api", multerRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

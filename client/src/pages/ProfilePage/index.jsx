@@ -1,12 +1,7 @@
-import AuthComponent from "~/components/AuthComponent";
 import Button from "~/components/Button";
 
 const ProfilePage = () => {
-   return (
-      <div>
-         <AuthComponent />
-      </div>
-   );
+  return <div></div>;
 };
 
 export default ProfilePage;

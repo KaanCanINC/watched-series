@@ -12,20 +12,30 @@ export default {
                "0%": { maxHeight: "500px", display: "flex" },
                "100%": { maxHeight: "0", display: "flex" },
             },
-            zero: {
+            modalOpen: {
                "0%": { scale: "0", },
                "100%": { scale: "1", },
             },
-            hero: {
+            modalClose: {
                "0%": { scale: "1", display: "block" },
                "100%": { scale: "0", display: "block" },
+            },
+            rotate: {
+               "0%": { transform: 'rotate(90deg)' },
+               "100%": { transform: 'rotate(-90deg)' },
+            },
+            rotateReverse: {
+               "0%": { transform: 'rotate(-90deg)' },
+               "100%": { transform: 'rotate(90deg)' },
             },
          },
          animation: {
             expand: "expand 0.5s ease-out forwards",
             collapse: "collapse 0.5s ease-out forwards",
-            zero: "zero 0.5s ease-out forwards",
-            hero: "hero 0.5s ease-out forwards",
+            modalOpen: "modalOpen 0.5s ease-out forwards",
+            modalClose: "modalClose 0.5s ease-out forwards",
+            rotate: "rotate 0.5s ease-out forwards",
+            rotateReverse: "rotateReverse 0.5s ease-out forwards",
          },
       },
    },
